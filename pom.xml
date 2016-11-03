@@ -45,6 +45,11 @@
 		</dependency>
 		<dependency>
 			<groupId>be.nabu.libs.types</groupId>
+			<artifactId>types-java</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>be.nabu.libs.types</groupId>
 			<artifactId>types-binding-flat</artifactId>
 		</dependency>
 	</dependencies>
