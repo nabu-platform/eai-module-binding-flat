@@ -57,14 +57,17 @@ public class Services {
 	
 	@SuppressWarnings("unchecked")
 	@WebResult(name = "uri")
-	public URI store(@WebParam(name = "data") @NotNull Object data, @WebParam(name = "dictionary") @NotNull String dictionary, @WebParam(name = "record") String record, @WebParam(name = "charset") Charset charset, @WebParam(name = "context") String context) throws URISyntaxException, IOException {
+	public URI store(@WebParam(name = "data") Object data, @WebParam(name = "dictionary") @NotNull String dictionary, @WebParam(name = "record") String record, @WebParam(name = "charset") Charset charset, @WebParam(name = "context") String context, @WebParam(name = "name") String name) throws URISyntaxException, IOException {
+		if (data == null) {
+			return null;
+		}
 		FlatBindingArtifact artifact = (FlatBindingArtifact) EAIResourceRepository.getInstance().resolve(dictionary);
 		FlatBinding binding = new FlatBinding(artifact.getConfig(), charset == null ? Charset.defaultCharset() : charset);
 		if (record != null) {
 			binding = binding.getNamedBinding(record);
 		}
 		
-		DatastoreOutputStream streamable = nabu.frameworks.datastore.Services.streamable(runtime, context, dictionary, "text/plain");
+		DatastoreOutputStream streamable = nabu.frameworks.datastore.Services.streamable(runtime, context, name == null ? dictionary : name, "text/plain");
 		if (streamable != null) {
 			try {
 				binding.marshal(streamable, data instanceof ComplexContent ? (ComplexContent) data : ComplexContentWrapperFactory.getInstance().getWrapper().wrap(data));
