@@ -80,7 +80,7 @@ public class Services {
 		else {
 			InputStream marshal = marshal(data, dictionary, record, charset);
 			ContextualWritableDatastore<String> datastore = nabu.frameworks.datastore.Services.getAsDatastore(this.context);
-			return datastore.store(context, marshal, dictionary, "text/plain");
+			return datastore.store(context, marshal, name == null ? dictionary + ".txt" : name, "text/plain");
 		}
 	}
 }
